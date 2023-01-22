@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    padding: 30px;
+}
+
+
+
+form {
+    padding: 10px;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-around;
+    border: 1px solid #A0AEC0;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+
+input {
+    display: block;
+    border-radius: 6px;
+    border: 1px solid #A0AEC0;
+    width: 365px;
+    height: 35px;
+    background: #E2E8F0;
+}
+
+input:hover {
+    transition: 2s;
+    background: #FFFFFF;
+}
+
+.container-button {
+    margin-top: 16px;
+    justify-content: space-around;
+
+}
+
+.salvar {
+    background: #E53E3E;
+    border-radius: 6px;
+    border: 1px solid #A0AEC0;
+    padding: 10px;
+    color: #FFFFFF;
+    width: 79px;
+    height: 34px;
+}
+
+.limpar-dados {
+    background: #38A169;
+    border-radius: 6px;
+    border: 1px solid #A0AEC0;
+    padding: 10px;
+    color: #FFFFFF;
+    width: 138px;
+    height: 34px;
+}
+
+.container-tabela {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 16px;
+    border: 1px solid #A0AEC0;
+    border-radius: 6px;
+    text-align: justify;
+    border-spacing: 1px;
+}
+
+.container-cabecalho {
+    padding: 10px;
+    border: 2px solid #2e2f30;
+}
+.container-produto {
+    border: 1px solid #A0AEC0;
+    background: #E2E8F0;
+    border-radius: 6px;
+}
+
+.container-produto:hover {
+    background-color: #B8D6FF;
+}
+
+.imagem-produto {
+    width: 64px;
+    height: 64px;
+}
