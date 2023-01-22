@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="index.css">
     <script src="main.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/8e927d7b74.js" crossorigin="anonymous"></script>
+
     <title></title>
 </head>
 
@@ -14,68 +16,71 @@
 
     <div class="container-pai">
         <h2>Novo Registro</h1>
-            
-                <form id="form">
-                    <div class="container-registro">
-                        <label for="descProduto">Descrição*:</label>
-                        <input type="text" name="descProduto" id="descProdutoInput">
-                    </div>
+            <hr>
+            <form id="form">
+                <div class="container-registro">
+                    <label for="descProduto">Descrição*:</label>
+                    <input type="text" name="descProduto" id="descProdutoInput">
+                </div>
 
-                    <div class="container-registro">
-                        <label for="vlrVenda">Valor de Venda*:</label>
-                        <input type="number" step="0.01" name="vlrVenda" id="vlrVendaInput">
-                    </div>
+                <div class="container-registro">
+                    <label for="vlrVenda">Valor de Venda*:</label>
+                    <input type="number" step="0.01" name="vlrVenda" id="vlrVendaInput">
+                </div>
 
-                    <div class="container-registro">
-                        <label for="refProduto">Referência:</label>
-                        <input type="text" name="refProduto" id="refProdutoInput">
-                    </div>
+                <div class="container-registro">
+                    <label for="refProduto">Referência:</label>
+                    <input type="text" name="refProduto" id="refProdutoInput">
+                </div>
 
-                    <div class="container-registro">
-                        <label for="un">Unidade de medida*:</label>
-                        <input type="text" name="un" id="unInput">
-                    </div>
+                <div class="container-registro">
+                    <label for="un">Unidade de medida*:</label>
+                    <input type="text" name="un" id="unInput">
+                </div>
 
-                    <div class="container-registro">
-                        <label for="fabProduto">Fabricante:</label>
-                        <input type="text" name="fabProduto" id="fabProdutoUnput">
-                    </div>
+                <div class="container-registro">
+                    <label for="fabProduto">Fabricante:</label>
+                    <input type="text" name="fabProduto" id="fabProdutoUnput">
+                </div>
 
-                    <div class="container-registro">
-                        <label for="estoqueProduto">Estoque:</label>
-                        <input type="number" name="estoqueProduto" id="estoqueProdutoInput">
-                    </div>
+                <div class="container-registro">
+                    <label for="estoqueProduto">Estoque:</label>
+                    <input type="number" name="estoqueProduto" id="estoqueProdutoInput">
+                </div>
 
-                    <div class="container-registro-img">
-                        <label for="imagem">Imagem do Produto:</label>
-                        <input type="text" name="imagem" id="imagemInput">
-                    </div>
+                <div class="container-registro-img">
+                    <label for="imagem">Imagem do Produto:</label>
+                    <input type="text" name="imagem" id="imagemInput">
+                </div>
 
-                    <div class="container-button">
-                        <button type="reset" class="limpar-dados">Limpar Campos</button>
-                        <button type="submit" class="salvar" onclick="addNovoProduto()">Salvar</button>
-                    </div>
-                </form>
+                <div class="container-button">
+                    <button type="reset" class="limpar-dados">Limpar Campos</button>
+                    <button type="submit" class="salvar" onclick="addNovoProduto()">Salvar</button>
+                </div>
+            </form>
 
-                <table class="container-tabela">
-                    <thead class="container-cabecalho">
-                        <tr>
-                            <th>Imagem</td>
-                            <th>Nome do Produto</td>
-                            <th>Referência</td>
-                            <th>Valor de Venda</td>
-                            <th>Fabricante</td>
-                            <th>Estoque</td>
-                            <img src="image.png">
-                            <img src="image.png">
-                        </tr>
-                    </thead>
+            <table class="container-tabela">
 
-                    <tbody id="tabelaListaProdutos">                 
+                <thead class="container-cabecalho">
+                    <tr>
+                        <th>Imagem</td>
+                        <th>Nome do Produto</td>
+                        <th>Referência</td>
+                        <th>Valor de Venda</td>
+                        <th>Fabricante</td>
+                        <th>Estoque</td>
+                        <th>
+                            <i class="fa-solid fa-list-ul"></i>
+                            <i class="fa-solid fa-table-list"></i>
+                        </th>
+                    </tr>
+                </thead>
 
-                    </tbody>
-                </table>
-            </div>
+                <tbody id="tabelaListaProdutos">
+
+                </tbody>
+            </table>
+    </div>
     </div>
 </body>
 

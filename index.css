@@ -37,7 +37,6 @@ input:hover {
 }
 
 .container-button {
-    margin-top: 16px;
     justify-content: space-around;
 
 }
@@ -50,6 +49,8 @@ input:hover {
     color: #FFFFFF;
     width: 79px;
     height: 34px;
+    cursor: pointer;
+    margin: 16px;
 }
 
 .limpar-dados {
@@ -60,6 +61,8 @@ input:hover {
     color: #FFFFFF;
     width: 138px;
     height: 34px;
+    cursor: pointer;
+    
 }
 
 .container-tabela {
@@ -75,9 +78,11 @@ input:hover {
 }
 
 .container-cabecalho {
-    padding: 10px;
+    padding: 200px;
     border: 2px solid #2e2f30;
+
 }
+
 .container-produto {
     border: 1px solid #A0AEC0;
     background: #E2E8F0;
