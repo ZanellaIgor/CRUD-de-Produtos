@@ -62,7 +62,6 @@ input:hover {
     width: 138px;
     height: 34px;
     cursor: pointer;
-    
 }
 
 .container-tabela {
@@ -80,6 +79,7 @@ input:hover {
 .container-cabecalho {
     padding: 200px;
     border: 2px solid #2e2f30;
+
 
 }
 

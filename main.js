@@ -50,9 +50,7 @@ function addNovoProduto() {
         })
         .catch(error => console.log(error))
     listaDeProdutos()
-
 }
-
 
 //criando td (celula/linha)
 function criarCelula(textoDaCelula) {
@@ -62,14 +60,26 @@ function criarCelula(textoDaCelula) {
     return td
 }
 
+
+//limpaProdutos
+
+function limpaProdutos() {
+    const tabelaProdutos = document.querySelectorAll("#tabelaListaProdutos > tr")
+    if (tabelaProdutos && tabelaProdutos.length > 0) {
+        tabelaProdutos.forEach(tr => tr.remove())
+    }
+
+}
+
+
 //função lista de produtos
 async function listaDeProdutos() {
     const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
+    limpaProdutos()
     axios.get(url)
 
         .then(response => {
             const produtos = response.data
-
 
             //console.log(produtos) 
             for (const [key, produto] of Object.entries(produtos)) {
@@ -83,7 +93,7 @@ async function listaDeProdutos() {
                 let celulaEstoque = criarCelula(produto.estoque)
 
                 //Icones (del)
-                let celularIcons = criarCelula(`<i class="fa-solid fa-trash"></i>`)
+                let celularIcons = criarCelula(`<button onclick="onDeleteClick(${produto.id})"><i class="fa-solid fa-trash"></i></button>`)
 
                 //Imagem na tabela
                 let celulaImagemProduto = criarCelula(`<img src="${produto.imagemProduto}" class="imagem-produto">`)
@@ -107,5 +117,21 @@ async function listaDeProdutos() {
             //renderResults.textContent = JSON.stringify(produtos)    
         })
         .catch(error => console.log(error))
+
 }
 listaDeProdutos()
+
+
+function onDeleteClick(produtoId) {
+    if (confirm('Tem certeza que deseja deletar este Produto?')) {
+        axios.delete(`${url}/${produtoId}`)
+            .then(response => {
+                console.log(response.data)
+                listaDeProdutos()
+            })
+            .catch(error => console.log(error))
+        
+
+    }
+
+}
