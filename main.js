@@ -2,7 +2,7 @@
 //Axios
 const url = "https://windelweb.windel.com.br:3000/teste-front"
 
-function addNovoProduto() {
+async function addNovoProduto() {
 
     //Dados do Input
 
@@ -49,7 +49,7 @@ function addNovoProduto() {
             console.log(response.data)
         })
         .catch(error => console.log(error))
-    listaDeProdutos()
+    setInterval( listaDeProdutos(),1000)
 }
 
 //criando td (celula/linha)
