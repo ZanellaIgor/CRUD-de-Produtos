@@ -6,6 +6,10 @@ body {
     padding: 30px;
 }
 
+h1 {
+    margin-bottom: 0px;
+}
+
 
 
 form {
@@ -64,6 +68,11 @@ input:hover {
     cursor: pointer;
 }
 
+thead {
+    margin-bottom: 400px;
+}
+
+
 .container-tabela {
     width: 100%;
     margin-top: 10px;
@@ -73,14 +82,20 @@ input:hover {
     border: 1px solid #A0AEC0;
     border-radius: 6px;
     text-align: justify;
-    border-spacing: 1px;
+    border-spacing: 0px;
+}
+
+.tabelaListaProdutos {
+    border: 2px solid #A0AEC0;
 }
 
 
+
 .container-produto {
-    border: 1px solid #A0AEC0;
+    border: 1px solid #0758c2;
     background: #E2E8F0;
     border-radius: 6px;
+    justify-items: center;
 }
 
 .container-produto:hover {
@@ -90,4 +105,10 @@ input:hover {
 .imagem-produto {
     width: 64px;
     height: 64px;
+}
+
+.imagem-delete {
+    cursor: pointer;
+    width: 70%;
+    height: 80%;
 }

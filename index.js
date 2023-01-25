@@ -29,7 +29,6 @@ async function addNovoProduto() {
     const imagem = (imagemInput).value
 
 
-
     //criação do produto
     const novoProduto = {
 
@@ -47,9 +46,9 @@ async function addNovoProduto() {
     axios.post(url, novoProduto)
         .then(response => {
             console.log(response.data)
+            listaDeProdutos()
         })
         .catch(error => console.log(error))
-    setInterval( listaDeProdutos(),1000)
 }
 
 //criando td (celula/linha)
@@ -73,6 +72,9 @@ function limpaProdutos() {
 
 
 //função lista de produtos
+
+
+
 async function listaDeProdutos() {
     const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
     limpaProdutos()
@@ -82,18 +84,18 @@ async function listaDeProdutos() {
             const produtos = response.data
 
             //console.log(produtos) 
+
             for (const [key, produto] of Object.entries(produtos)) {
                 //console.log(produto.nome) 
-
 
                 let celulaNome = criarCelula(produto.nome)
                 let celulaReferencia = criarCelula(produto.referencia)
                 let celulaValorDeVenda = criarCelula(produto.valorVenda)
                 let celulaFabricante = criarCelula(produto.fabricante)
-                let celulaEstoque = criarCelula(produto.estoque)
+                let celulaEstoque = criarCelula(` ${produto.estoque}  ${produto.unidadeMedida}`)
 
                 //Icones (del)
-                let celularIcons = criarCelula(`<button onclick="onDeleteClick(${produto.id})"><i class="fa-solid fa-trash"></i></button>`)
+                let celulaIcons = criarCelula(`<button onclick="onDeleteClick(${produto.id})" class="imagem-delete"><i class="fa-solid fa-trash"></i></button>`)
 
                 //Imagem na tabela
                 let celulaImagemProduto = criarCelula(`<img src="${produto.imagemProduto}" class="imagem-produto">`)
@@ -101,15 +103,13 @@ async function listaDeProdutos() {
                 let linha = document.createElement("tr")
                 linha.classList.add("container-produto")
 
-
-
                 linha.appendChild(celulaImagemProduto)
                 linha.appendChild(celulaNome)
                 linha.appendChild(celulaReferencia)
                 linha.appendChild(celulaValorDeVenda)
                 linha.appendChild(celulaFabricante)
                 linha.appendChild(celulaEstoque)
-                linha.appendChild(celularIcons)
+                linha.appendChild(celulaIcons)
 
                 tabelaProdutos.appendChild(linha)
 
@@ -121,6 +121,11 @@ async function listaDeProdutos() {
 }
 listaDeProdutos()
 
+function ordemDesc(){
+    //let click = !click
+    const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
+    console.log(tabelaProdutos)   
+}
 
 function onDeleteClick(produtoId) {
     if (confirm('Tem certeza que deseja deletar este Produto?')) {
@@ -130,8 +135,6 @@ function onDeleteClick(produtoId) {
                 listaDeProdutos()
             })
             .catch(error => console.log(error))
-        
-
     }
 
 }
