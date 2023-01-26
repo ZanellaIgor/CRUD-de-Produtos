@@ -2,6 +2,8 @@
 //Axios
 const url = "https://windelweb.windel.com.br:3000/teste-front"
 
+const ordemCrescente = true;
+
 async function addNovoProduto() {
 
     //Dados do Input
@@ -17,7 +19,6 @@ async function addNovoProduto() {
 
     //Criação hora
     //const criacaoProduto = new Date()
-
 
     //transformando em valores
     const descProduto = (descProdutoInput).value
@@ -59,7 +60,6 @@ function criarCelula(textoDaCelula) {
     return td
 }
 
-
 //limpaProdutos
 
 function limpaProdutos() {
@@ -72,8 +72,6 @@ function limpaProdutos() {
 
 
 //função lista de produtos
-
-
 
 async function listaDeProdutos() {
     const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
@@ -95,14 +93,17 @@ async function listaDeProdutos() {
                 let celulaEstoque = criarCelula(` ${produto.estoque}  ${produto.unidadeMedida}`)
 
                 //Icones (del)
-                let celulaIcons = criarCelula(`<button onclick="onDeleteClick(${produto.id})" class="imagem-delete"><i class="fa-solid fa-trash"></i></button>`)
+                let celulaIcons = criarCelula(`<button onclick="onDeleteClick(${produto.id})" class="imagem-acao"><i class="fa-solid fa-trash"></i></button> 
+                <button onclick="editProduto(${produto.id})" class="imagem-acao"><i class="fa-solid fa-pen-to-square"></i></button>`)
 
                 //Imagem na tabela
                 let celulaImagemProduto = criarCelula(`<img src="${produto.imagemProduto}" class="imagem-produto">`)
 
+                //Criando Linha
                 let linha = document.createElement("tr")
                 linha.classList.add("container-produto")
 
+                //acrescentando no html
                 linha.appendChild(celulaImagemProduto)
                 linha.appendChild(celulaNome)
                 linha.appendChild(celulaReferencia)
@@ -121,10 +122,30 @@ async function listaDeProdutos() {
 }
 listaDeProdutos()
 
-function ordemDesc(){
-    //let click = !click
-    const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
-    console.log(tabelaProdutos)   
+
+function ordernar(element, valorNumerico) {
+    window.ordemCrescente = !window.ordemCrescente
+    const asc = window.ordemCrescente;  // ordem: ascendente ou descendente
+    const coluna = element.cellIndex
+    // Coluna Ordenada
+    const tabela = document.getElementById('tabelaListaProdutos');
+
+    const linhas = Array.from(tabela.querySelectorAll('tbody tr'));
+    console.log(linhas)
+
+    linhas.sort((a, b) => {
+        let a_val = a.children[coluna].textContent
+        let b_val = b.children[coluna].textContent
+        if (valorNumerico) {
+            a_val = parseFloat(a_val)
+            b_val = parseFloat(b_val)
+            return (asc) ? (a_val - b_val) : (b_val - a_val)
+        }
+        return (asc) ? a_val.localeCompare(b_val) : b_val.localeCompare(a_val)
+    })
+    linhas.forEach(elem => {
+        tabela.appendChild(elem)
+    })
 }
 
 function onDeleteClick(produtoId) {
@@ -136,5 +157,30 @@ function onDeleteClick(produtoId) {
             })
             .catch(error => console.log(error))
     }
-
 }
+
+
+/*const switchModal = () => {
+    const modal = document.querySelector('modal-Input')
+    const estiloAtual = modal.style.display
+    if (estiloAtual == 'block') {
+        modal.style.display = 'none'
+    }
+    else {
+        modal.style.display = 'block'
+    }
+}*/
+
+
+
+function editProduto(produtoId) {
+    const modal = document.querySelector('#form-modal')
+    const estiloAtual = modal.style.display
+    if (estiloAtual == 'block') {
+        modal.style.display = 'none'
+    }
+    else {
+        modal.style.display = 'block'
+    }
+}
+
