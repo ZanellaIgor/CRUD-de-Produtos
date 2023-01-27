@@ -68,9 +68,9 @@ input:hover {
     cursor: pointer;
 }
 
+
 .container-tabela {
-    
-    width: 100%;
+    display: grid;
     margin-top: 10px;
     padding: 10px;
     font-size: 14px;
@@ -78,52 +78,55 @@ input:hover {
     border: 1px solid #A0AEC0;
     border-radius: 6px;
     text-align: justify;
-    border-spacing: 0px;
+
 }
 
 thead {
     border: 1px solid #A0AEC0;
-    border-spacing: 0px;
-    margin: 10px;
-    padding: 10px;
-}
-
-.tabelaListaProdutos {
-    border: 2px solid #A0AEC0;
     border-radius: 6px;
-    content: inherit;
+    margin-bottom: 4px;
 }
 
-.modal-Input{
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+tr {
+    padding: 10px;
+    display: grid;
+    border-radius: 6px;
+    grid-template-columns: 1.5fr 4.5fr 1fr 1fr 1fr 1fr 1fr;
+    margin-bottom: 10px;
+    border-bottom: #FFFFFF;
 }
+
+th {
+    cursor: pointer;
+}
+
+.imagem-cabecalho {
+    cursor: not-allowed;
+}
+
 
 
 .container-produto {
-    
-    border: 1px solid #0758c2;
     background: #E2E8F0;
     border-radius: 6px;
-    justify-items: center;
+    display: grid;
+    grid-template-columns: 1.5fr 4.5fr 1fr 1fr 1fr 1fr 1fr;
+    text-align: left;
 }
+
 
 .container-produto:hover {
     background-color: #B8D6FF;
 }
 
+
 .imagem-produto {
-    width: 64px;
-    height: 64px;
+    border-radius: 6px;
+    width: 60px;
+    height: 60px;
 }
 
-.imagem-acao{
+.imagem-acao {
     cursor: pointer;
 }
+

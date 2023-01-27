@@ -2,14 +2,23 @@
 //Axios
 const url = "https://windelweb.windel.com.br:3000/teste-front"
 
+//const de ordenação da lista
 const ordemCrescente = true;
 
-async function addNovoProduto() {
 
+//Altera Titulo
+function limpaH1() {
+    const registroH = document.getElementById('registro').innerHTML = "Novo Registro"
+}
+
+criarOuEditar = () => { (document.getElementById('salvaId.value') === "") ? (addNovoProduto()) : (alteraProduto(salvaId.value)) }
+
+//bloco de leitura dos Inputs
+function criaProduto() {
     //Dados do Input
 
     const form = document.querySelector("#form")
-    const descProdutoInput = document.getElementById("descProdutoInput")
+    const descProdutoInput = document.querySelector("#descProdutoInput")
     const vlrVendaInput = (document.querySelector("#vlrVendaInput"))
     const refProdutoInput = document.querySelector("#refProdutoInput")
     const unInput = document.querySelector("#unInput")
@@ -29,27 +38,33 @@ async function addNovoProduto() {
     const estoqueProduto = (estoqueProdutoInput).value
     const imagem = (imagemInput).value
 
-
     //criação do produto
     const novoProduto = {
 
         nome: descProduto,
-        valorVenda: Number(vlrVenda),
+        valorVenda: parseFloat(vlrVenda),
         referencia: refProduto,
         unidadeMedida: un,
         fabricante: fabProduto,
-        estoque: Number(estoqueProduto),
+        estoque: parseInt(estoqueProduto),
         imagemProduto: imagem,
     }
     console.log(novoProduto)
+    return novoProduto
+}
 
+function addNovoProduto() {
+
+
+    novoProduto = criaProduto()
 
     axios.post(url, novoProduto)
         .then(response => {
             console.log(response.data)
-            listaDeProdutos()
+            window.location.reload(true)
         })
         .catch(error => console.log(error))
+
 }
 
 //criando td (celula/linha)
@@ -70,7 +85,6 @@ function limpaProdutos() {
 
 }
 
-
 //função lista de produtos
 
 async function listaDeProdutos() {
@@ -90,7 +104,7 @@ async function listaDeProdutos() {
                 let celulaReferencia = criarCelula(produto.referencia)
                 let celulaValorDeVenda = criarCelula(produto.valorVenda)
                 let celulaFabricante = criarCelula(produto.fabricante)
-                let celulaEstoque = criarCelula(` ${produto.estoque}  ${produto.unidadeMedida}`)
+                let celulaEstoque = criarCelula(`${produto.estoque} ${produto.unidadeMedida}`)
 
                 //Icones (del)
                 let celulaIcons = criarCelula(`<button onclick="onDeleteClick(${produto.id})" class="imagem-acao"><i class="fa-solid fa-trash"></i></button> 
@@ -102,6 +116,10 @@ async function listaDeProdutos() {
                 //Criando Linha
                 let linha = document.createElement("tr")
                 linha.classList.add("container-produto")
+
+
+
+                linha.setAttribute("id", "produto-" + produto.id)
 
                 //acrescentando no html
                 linha.appendChild(celulaImagemProduto)
@@ -148,6 +166,8 @@ function ordernar(element, valorNumerico) {
     })
 }
 
+
+//Função delete
 function onDeleteClick(produtoId) {
     if (confirm('Tem certeza que deseja deletar este Produto?')) {
         axios.delete(`${url}/${produtoId}`)
@@ -159,28 +179,70 @@ function onDeleteClick(produtoId) {
     }
 }
 
-
-/*const switchModal = () => {
-    const modal = document.querySelector('modal-Input')
-    const estiloAtual = modal.style.display
-    if (estiloAtual == 'block') {
-        modal.style.display = 'none'
-    }
-    else {
-        modal.style.display = 'block'
-    }
-}*/
-
-
-
-function editProduto(produtoId) {
-    const modal = document.querySelector('#form-modal')
-    const estiloAtual = modal.style.display
-    if (estiloAtual == 'block') {
-        modal.style.display = 'none'
-    }
-    else {
-        modal.style.display = 'block'
-    }
+function naoImplementado() {
+    alert("Função não habilitada!")
 }
 
+
+// function alteraProduto() {
+//     const descProdutoInput = document.querySelector("#descProdutoInputMod")
+//     const vlrVendaInput = document.querySelector("#vlrVendaInputMod")
+//     const refProdutoInput = document.querySelector("#refProdutoInputMod")
+//     const unInput = document.querySelector("#unInputMod")
+//     const fabProdutoUnput = document.querySelector("#fabProdutoUnputMod")
+//     const estoqueProdutoInput = document.querySelector("#estoqueProdutoInputMod")
+//     const imagemInput = document.querySelector("#imagemInputMod")
+
+
+//     const descProduto = (descProdutoInput).value
+//     const vlrVenda = (vlrVendaInput).value
+//     const refProduto = (refProdutoInput).value
+//     const un = (unInput).value
+//     const fabProduto = (fabProdutoUnput).value
+//     const estoqueProduto = (estoqueProdutoInput).value
+//     const imagem = (imagemInput).value
+
+// }
+
+function editProduto(produtoId) {
+    const idProduto = produtoId
+    const produtoLinha = document.getElementById("produto-" + produtoId)
+    const descProdutoInput = document.querySelector("#descProdutoInput")
+    const vlrVendaInput = document.querySelector("#vlrVendaInput")
+    const refProdutoInput = document.querySelector("#refProdutoInput")
+    const unInput = document.querySelector("#unInput")
+    const fabProdutoUnput = document.querySelector("#fabProdutoUnput")
+    const estoqueProdutoInput = document.querySelector("#estoqueProdutoInput")
+    const imagemInput = document.querySelector("#imagemInput")
+    const salvaId = document.querySelector("#salvaId")
+
+    const estoqueUn = produtoLinha.children[5].textContent.split(' ')
+    const arraySemEspacos = estoqueUn.filter(item => item.trim() !== "");
+
+    descProdutoInput.value = produtoLinha.children[1].textContent
+    vlrVendaInput.value = produtoLinha.children[2].textContent
+    refProdutoInput.value = produtoLinha.children[3].textContent
+    unInput.value = arraySemEspacos[1]
+    fabProdutoUnput.value = produtoLinha.children[4].textContent
+    estoqueProdutoInput.value = arraySemEspacos[0]
+    imagemInput.value = produtoLinha.children[0].children[0].src
+    salvaId.value = idProduto
+
+    const registroH = document.getElementById('registro').innerHTML = "Editar Registro"
+}
+
+function alteraProduto(salvaId) {
+    const produto = criaProduto()
+    console.log(salvaId)
+    axios.patch(`${url}/${salvaId}`, produto)
+        .then(response => {
+            console.log(response)
+            window.location.reload(true)
+            // ou limpaH1()
+            // listaDeProdutos()
+
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}
