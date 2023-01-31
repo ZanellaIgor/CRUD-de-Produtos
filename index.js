@@ -5,6 +5,7 @@ const url = "https://windelweb.windel.com.br:3000/teste-front"
 //const de ordenação da lista
 const ordemCrescente = true;
 
+const pagina = 1  //Sem mais paginas (Paginação)
 
 //Altera Titulo
 function limpaH1() {
@@ -40,7 +41,6 @@ function criaProduto() {
 
     //criação do produto
     const novoProduto = {
-
         nome: descProduto,
         valorVenda: parseFloat(vlrVenda),
         referencia: refProduto,
@@ -53,11 +53,9 @@ function criaProduto() {
     return novoProduto
 }
 
+//mandando para a api o produto novo
 function addNovoProduto() {
-
-
     novoProduto = criaProduto()
-
     axios.post(url, novoProduto)
         .then(response => {
             console.log(response.data)
@@ -69,7 +67,6 @@ function addNovoProduto() {
 
 //criando td (celula/linha)
 function criarCelula(textoDaCelula) {
-
     let td = document.createElement("td")
     td.innerHTML = textoDaCelula
     return td
@@ -90,13 +87,10 @@ function limpaProdutos() {
 async function listaDeProdutos() {
     const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
     limpaProdutos()
-    axios.get(url)
-
+    axios.get(`${url}/pagination/${pagina}`)
         .then(response => {
             const produtos = response.data
-
             //console.log(produtos) 
-
             for (const [key, produto] of Object.entries(produtos)) {
                 //console.log(produto.nome) 
 
@@ -150,7 +144,6 @@ function ordernar(element, valorNumerico) {
 
     const linhas = Array.from(tabela.querySelectorAll('tbody tr'));
     console.log(linhas)
-
     linhas.sort((a, b) => {
         let a_val = a.children[coluna].textContent
         let b_val = b.children[coluna].textContent
@@ -165,7 +158,6 @@ function ordernar(element, valorNumerico) {
         tabela.appendChild(elem)
     })
 }
-
 
 //Função delete
 function onDeleteClick(produtoId) {
@@ -183,27 +175,6 @@ function naoImplementado() {
     alert("Função não habilitada!")
 }
 
-
-// function alteraProduto() {
-//     const descProdutoInput = document.querySelector("#descProdutoInputMod")
-//     const vlrVendaInput = document.querySelector("#vlrVendaInputMod")
-//     const refProdutoInput = document.querySelector("#refProdutoInputMod")
-//     const unInput = document.querySelector("#unInputMod")
-//     const fabProdutoUnput = document.querySelector("#fabProdutoUnputMod")
-//     const estoqueProdutoInput = document.querySelector("#estoqueProdutoInputMod")
-//     const imagemInput = document.querySelector("#imagemInputMod")
-
-
-//     const descProduto = (descProdutoInput).value
-//     const vlrVenda = (vlrVendaInput).value
-//     const refProduto = (refProdutoInput).value
-//     const un = (unInput).value
-//     const fabProduto = (fabProdutoUnput).value
-//     const estoqueProduto = (estoqueProdutoInput).value
-//     const imagem = (imagemInput).value
-
-// }
-
 function editProduto(produtoId) {
     const idProduto = produtoId
     const produtoLinha = document.getElementById("produto-" + produtoId)
@@ -220,8 +191,8 @@ function editProduto(produtoId) {
     const arraySemEspacos = estoqueUn.filter(item => item.trim() !== "");
 
     descProdutoInput.value = produtoLinha.children[1].textContent
-    vlrVendaInput.value = produtoLinha.children[2].textContent
-    refProdutoInput.value = produtoLinha.children[3].textContent
+    vlrVendaInput.value = produtoLinha.children[3].textContent
+    refProdutoInput.value = produtoLinha.children[2].textContent
     unInput.value = arraySemEspacos[1]
     fabProdutoUnput.value = produtoLinha.children[4].textContent
     estoqueProdutoInput.value = arraySemEspacos[0]
@@ -229,6 +200,9 @@ function editProduto(produtoId) {
     salvaId.value = idProduto
 
     const registroH = document.getElementById('registro').innerHTML = "Editar Registro"
+    descProdutoInput.focus()
+    
+
 }
 
 function alteraProduto(salvaId) {
