@@ -79,7 +79,6 @@ function limpaProdutos() {
     if (tabelaProdutos && tabelaProdutos.length > 0) {
         tabelaProdutos.forEach(tr => tr.remove())
     }
-
 }
 
 //função lista de produtos
@@ -101,8 +100,8 @@ async function listaDeProdutos() {
                 let celulaEstoque = criarCelula(`${produto.estoque} ${produto.unidadeMedida}`)
 
                 //Icones (del)
-                let celulaIcons = criarCelula(`<button onclick="onDeleteClick(${produto.id})" class="imagem-acao"><i class="fa-solid fa-trash"></i></button> 
-                <button onclick="editProduto(${produto.id})" class="imagem-acao"><i class="fa-solid fa-pen-to-square"></i></button>`)
+                let celulaIcons = criarCelula(`<div><button onclick="onDeleteClick(${produto.id})" class="imagem-acao del"><i class="fa-solid fa-trash"></i></button></div> 
+                <div><button onclick="editProduto(${produto.id})" class="imagem-acao edit"><i class="fa-solid fa-pen-to-square"></i></button><div>`)
 
                 //Imagem na tabela
                 let celulaImagemProduto = criarCelula(`<img src="${produto.imagemProduto}" class="imagem-produto">`)
@@ -201,7 +200,7 @@ function editProduto(produtoId) {
 
     const registroH = document.getElementById('registro').innerHTML = "Editar Registro"
     descProdutoInput.focus()
-    
+
 
 }
 
