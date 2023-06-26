@@ -1,9 +1,11 @@
-
 //Axios
-const url = "https://windelweb.windel.com.br:3000/teste-front"
+const url = "https://homologacao.windel.com.br:3000/teste-front"
 
 //const de ordenação da lista
 const ordemCrescente = true;
+
+//const renderização
+let renderTimerId = null;
 
 const pagina = 1  //Sem mais paginas (Paginação)
 
@@ -18,7 +20,6 @@ criarOuEditar = () => { (document.getElementById('salvaId.value') === "") ? (add
 function criaProduto() {
     //Dados do Input
 
-    const form = document.querySelector("#form")
     const descProdutoInput = document.querySelector("#descProdutoInput")
     const vlrVendaInput = (document.querySelector("#vlrVendaInput"))
     const refProdutoInput = document.querySelector("#refProdutoInput")
@@ -27,8 +28,6 @@ function criaProduto() {
     const estoqueProdutoInput = document.querySelector("#estoqueProdutoInput")
     const imagemInput = document.querySelector("#imagemInput")
 
-    //Criação hora
-    //const criacaoProduto = new Date()
 
     //transformando em valores
     const descProduto = (descProdutoInput).value
@@ -81,55 +80,116 @@ function limpaProdutos() {
     }
 }
 
+
+const descProdutoInput = document.querySelector("#descProdutoInput");
+const refProdutoInput = document.querySelector("#refProdutoInput");
+const fabProdutoUnput = document.querySelector("#fabProdutoUnput");
+descProdutoInput.addEventListener("input", handleInputChange);
+refProdutoInput.addEventListener("input", handleInputChange);
+fabProdutoUnput.addEventListener("input", handleInputChange);
+
+
+function handleInputChange() {
+    if (renderTimerId) {
+        clearTimeout(renderTimerId);
+      }
+      renderTimerId = setTimeout(listaDeProdutos, 300);
+    listaDeProdutos();
+}
+
+//filtro
+async function filter() {
+    const descProdutoInput = document.querySelector("#descProdutoInput").value.toLowerCase();
+    const refProdutoInput = document.querySelector("#refProdutoInput").value.toLowerCase();
+    const fabProdutoUnput = document.querySelector("#fabProdutoUnput").value.toLowerCase();
+    
+    try {
+      const response = await axios.get(`${url}/pagination/${pagina}`);
+      const produtos = response.data;
+      
+      console.log(descProdutoInput);
+      console.log(produtos);
+      
+      const filteredProdutos = produtos.filter((produto) => {
+        if (descProdutoInput && !produto.nome.toLowerCase().includes(descProdutoInput.toLowerCase())) {
+          return false;
+        }
+        if (refProdutoInput && !produto.referencia.toLowerCase().includes(refProdutoInput.toLowerCase())) {
+          return false;
+        }
+        if (fabProdutoUnput && !produto.fabricante.toLowerCase().includes(fabProdutoUnput.toLowerCase())) {
+          return false;
+        }
+        return true;
+      });
+      
+      console.log(filteredProdutos);
+      return filteredProdutos
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 //função lista de produtos
 
 async function listaDeProdutos() {
+    
+    const filteredProdutos = await filter();
+   
+    if (filteredProdutos && filteredProdutos.length > 0) {
+        const produtos = filteredProdutos
+        console.log('atecubanos')
+        limpaProdutos()
+        listaDeProdutosRender(produtos)
+    } else {
+        limpaProdutos()
+        const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
+        let linha = document.createElement("tr")
+        linha.classList.add("container-produto")
+        linha.innerHTML = "deu ruim"
+        tabelaProdutos.appendChild(linha)
+
+    }
+}
+
+function listaDeProdutosRender(produtos){
     const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
-    limpaProdutos()
-    axios.get(`${url}/pagination/${pagina}`)
-        .then(response => {
-            const produtos = response.data
-            //console.log(produtos) 
-            for (const [key, produto] of Object.entries(produtos)) {
-                //console.log(produto.nome) 
 
-                let celulaNome = criarCelula(produto.nome)
-                let celulaReferencia = criarCelula(produto.referencia)
-                let celulaValorDeVenda = criarCelula(produto.valorVenda)
-                let celulaFabricante = criarCelula(produto.fabricante)
-                let celulaEstoque = criarCelula(`${produto.estoque} ${produto.unidadeMedida}`)
+    for (const [key, produto] of Object.entries(produtos)) {
+        //console.log(produto.nome) 
 
-                //Icones (del)
-                let celulaIcons = criarCelula(`<div><button onclick="onDeleteClick(${produto.id})" class="imagem-acao del"><i class="fa-solid fa-trash"></i></button></div> 
-                <div><button onclick="editProduto(${produto.id})" class="imagem-acao edit"><i class="fa-solid fa-pen-to-square"></i></button><div>`)
+        let celulaNome = criarCelula(produto.nome)
+        let celulaReferencia = criarCelula(produto.referencia)
+        let celulaValorDeVenda = criarCelula(produto.valorVenda)
+        let celulaFabricante = criarCelula(produto.fabricante)
+        let celulaEstoque = criarCelula(`${produto.estoque} ${produto.unidadeMedida}`)
 
-                //Imagem na tabela
-                let celulaImagemProduto = criarCelula(`<img src="${produto.imagemProduto}" class="imagem-produto">`)
+        //Icones (del)
+        let celulaIcons = criarCelula(`<div><button onclick="onDeleteClick(${produto.id})" class="imagem-acao del"><i class="fa-solid fa-trash"></i></button></div> 
+        <div><button onclick="editProduto(${produto.id})" class="imagem-acao edit"><i class="fa-solid fa-pen-to-square"></i></button><div>`)
 
-                //Criando Linha
-                let linha = document.createElement("tr")
-                linha.classList.add("container-produto")
+        //Imagem na tabela
+        let celulaImagemProduto = criarCelula(`<img src="${produto.imagemProduto}" class="imagem-produto">`)
 
+        //Criando Linha
+        let linha = document.createElement("tr")
+        linha.classList.add("container-produto")
 
+        linha.setAttribute("id", "produto-" + produto.id)
 
-                linha.setAttribute("id", "produto-" + produto.id)
+        //acrescentando no html
+        linha.appendChild(celulaImagemProduto)
+        linha.appendChild(celulaNome)
+        linha.appendChild(celulaReferencia)
+        linha.appendChild(celulaValorDeVenda)
+        linha.appendChild(celulaFabricante)
+        linha.appendChild(celulaEstoque)
+        linha.appendChild(celulaIcons)
 
-                //acrescentando no html
-                linha.appendChild(celulaImagemProduto)
-                linha.appendChild(celulaNome)
-                linha.appendChild(celulaReferencia)
-                linha.appendChild(celulaValorDeVenda)
-                linha.appendChild(celulaFabricante)
-                linha.appendChild(celulaEstoque)
-                linha.appendChild(celulaIcons)
+        tabelaProdutos.appendChild(linha)
 
-                tabelaProdutos.appendChild(linha)
-
-            }
-            //renderResults.textContent = JSON.stringify(produtos)    
-        })
-        .catch(error => console.log(error))
-
+    }
 }
 listaDeProdutos()
 
@@ -219,3 +279,4 @@ function alteraProduto(salvaId) {
             console.log(error)
         })
 }
+
