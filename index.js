@@ -104,7 +104,7 @@ async function filter() {
     const fabProdutoUnput = document.querySelector("#fabProdutoUnput").value.toLowerCase();
     
     try {
-      const response = await axios.get(`${url}/pagination/${pagina}`);
+      const response = await axios.get(`${url}`);
       const produtos = response.data;
       
       console.log(descProdutoInput);

@@ -74,8 +74,7 @@ input:hover {
     line-height: 16px;
     border: 1px solid #A0AEC0;
     border-radius: 6px;
-    text-align: justify;
-
+    text-align: left;
 }
 
 thead {
@@ -117,7 +116,6 @@ th {
 }
 
 .imagem-produto {
-    border:1px solid  #B8D6FF;
     border-radius: 6px;
     width: 60px;
     height: 60px;
@@ -140,4 +138,13 @@ th {
 .imagem-acao i {
     width: 16px;
     height: 16px;
+}
+@media (max-width: 1064px) {
+    input {
+        width: 300px;
+    }
+    table {
+        display: block;
+        overflow-x: scroll;
+    }
 }
