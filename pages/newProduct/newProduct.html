@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="..//assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
     <script src="newProduct.js" defer></script>
     <title>Novo Produto</title>
 </head>
@@ -49,11 +50,10 @@
 
             <div class="container-button">
                 <button type="reset" class="limpar-dados" onclick="limpaH1()">Limpar Campos</button>
-                <button type="button" class="salvar" onclick="criarOuEditar()">Salvar</button>
+                <button type="button" class="adicionar" onclick="addNovoProduto()">Salvar</button>
             </div>
             <label for="salvaId"></label>
             <input type="hidden" class="salvaId" id="salvaId">
         </form>
-    
 </body>
 </html>

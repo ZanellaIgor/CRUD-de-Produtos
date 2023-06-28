@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-style: normal;
+    padding: 30px;
+}
+
+.container-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+}
+hr{
+    margin-top: -10px;
+    color: #A0AEC0;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+form {
+    padding: 10px;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-around;
+    border: 1px solid #A0AEC0;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+input {
+    display: flex;
+    border-radius: 4px;
+    border: 1px solid #A0AEC0;
+    width: 365px;
+    height: 35px;
+    background: #E2E8F0;
+    outline: 0;
+}
+
+input:hover {
+    transition: 2s;
+    background: #FFFFFF;
+}
+
+.container-button {
+    justify-content: space-around;
+
+}
+
+.adicionar {
+    background: #38A169;
+    border-radius: 6px;
+    border: 1px solid #A0AEC0;
+    padding: 10px;
+    color: #FFFFFF;
+    width: 107px;
+    height: 34px;
+    cursor: pointer;
+    margin: 16px;
+}
+
+.limpar-dados {
+    background: #E53E3E;
+    border-radius: 6px;
+    border: 1px solid #A0AEC0;
+    padding: 10px;
+    color: #FFFFFF;
+    width: 138px;
+    height: 34px;
+    cursor: pointer;
+}
