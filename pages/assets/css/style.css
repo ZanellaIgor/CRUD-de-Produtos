@@ -5,7 +5,6 @@ body {
     font-style: normal;
     padding: 30px;
 }
-
 .container-header{
     display: flex;
     justify-content: space-between;
@@ -16,12 +15,10 @@ hr{
     margin-top: -10px;
     color: #A0AEC0;
 }
-
 a{
     text-decoration: none;
     color: white;
 }
-
 form {
     padding: 10px;
     gap: 20px;
@@ -34,7 +31,6 @@ form {
     font-size: 14px;
     line-height: 16px;
 }
-
 input {
     display: flex;
     border-radius: 4px;
@@ -44,17 +40,14 @@ input {
     background: #E2E8F0;
     outline: 0;
 }
-
 input:hover {
     transition: 2s;
     background: #FFFFFF;
 }
-
 .container-button {
     justify-content: space-around;
 
 }
-
 .adicionar {
     background: #38A169;
     border-radius: 6px;
@@ -66,7 +59,6 @@ input:hover {
     cursor: pointer;
     margin: 16px;
 }
-
 .limpar-dados {
     background: #E53E3E;
     border-radius: 6px;
