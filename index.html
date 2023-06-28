@@ -8,56 +8,30 @@
     <script src="index.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://kit.fontawesome.com/8e927d7b74.js" crossorigin="anonymous"></script>
-
-    <title></title>
+    <title>Produtos</title>
 </head>
 
 <body>
     <div class="container-pai">
-        <h1 id="registro">Novo Registro</h1>
-        <hr>
+        <div class="container-header">
+            <h1 id="registro">Produtos</h1>
+            <button class="adicionar"><a href="/pages/newProduct/newProduct.html">+ Adicionar</a></button> 
+        </div><hr>
         <form id="form">
             <div class="container-registro">
-                <label for="descProduto">Descrição:</label>
-                <input type="text" name="descProduto" id="descProdutoInput" required>
+                <label for="desc">Nome:</label>
+                <input type="text" name="desc" id="descInput">
             </div>
-
+        
             <div class="container-registro">
-                <label for="vlrVenda">Valor de Venda:</label>
-                <input type="number" step="0.01" name="vlrVenda" id="vlrVendaInput" required>
+                <label for="ref">Referência:</label>
+                <input type="text" name="ref" id="refInput">
             </div>
-
             <div class="container-registro">
-                <label for="refProduto">Referência:</label>
-                <input type="text" name="refProduto" id="refProdutoInput">
+                <label for="fab">Fabricante</label>
+                <input type="text" name="fab" id="fabInput">
             </div>
-
-            <div class="container-registro">
-                <label for="un">Unidade de medida:</label>
-                <input type="text" name="un" id="unInput" required>
-            </div>
-
-            <div class="container-registro">
-                <label for="fabProduto">Fabricante:</label>
-                <input type="text" name="fabProduto" id="fabProdutoUnput">
-            </div>
-
-            <div class="container-registro">
-                <label for="estoqueProduto">Estoque:</label>
-                <input type="number" name="estoqueProduto" id="estoqueProdutoInput">
-            </div>
-
-            <div class="container-registro-img">
-                <label for="imagem">Imagem do Produto:</label>
-                <input type="text" name="imagem" id="imagemInput">
-            </div>
-
-            <div class="container-button">
-                <button type="reset" class="limpar-dados" onclick="limpaH1()">Limpar Campos</button>
-                <button type="button" class="salvar" onclick="criarOuEditar()">Salvar</button>
-            </div>
-            <label for="salvaId"></label>
-            <input type="hidden" class="salvaId" id="salvaId">
+            <button class="limpar-dados">Limpar Filtros</button>
         </form>
         <table class="container-tabela">
             <thead>

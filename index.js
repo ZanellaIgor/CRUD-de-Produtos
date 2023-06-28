@@ -81,12 +81,12 @@ function limpaProdutos() {
 }
 
 
-const descProdutoInput = document.querySelector("#descProdutoInput");
-const refProdutoInput = document.querySelector("#refProdutoInput");
-const fabProdutoUnput = document.querySelector("#fabProdutoUnput");
-descProdutoInput.addEventListener("input", handleInputChange);
-refProdutoInput.addEventListener("input", handleInputChange);
-fabProdutoUnput.addEventListener("input", handleInputChange);
+const descInput = document.querySelector("#descInput");
+const refInput = document.querySelector("#refInput");
+const fabInput = document.querySelector("#fabInput");
+descInput.addEventListener("input", handleInputChange);
+refInput.addEventListener("input", handleInputChange);
+fabInput.addEventListener("input", handleInputChange);
 
 
 function handleInputChange() {
@@ -99,25 +99,24 @@ function handleInputChange() {
 
 //filtro
 async function filter() {
-    const descProdutoInput = document.querySelector("#descProdutoInput").value.toLowerCase();
-    const refProdutoInput = document.querySelector("#refProdutoInput").value.toLowerCase();
-    const fabProdutoUnput = document.querySelector("#fabProdutoUnput").value.toLowerCase();
+    const descInput = document.querySelector("#descInput").value.toLowerCase();
+    const refInput = document.querySelector("#refInput").value.toLowerCase();
+    const fabInput = document.querySelector("#fabInput").value.toLowerCase();
     
     try {
       const response = await axios.get(`${url}`);
       const produtos = response.data;
       
-      console.log(descProdutoInput);
       console.log(produtos);
       
       const filteredProdutos = produtos.filter((produto) => {
-        if (descProdutoInput && !produto.nome.toLowerCase().includes(descProdutoInput.toLowerCase())) {
+        if (descInput && !produto.nome.toLowerCase().includes(descInput.toLowerCase())) {
           return false;
         }
-        if (refProdutoInput && !produto.referencia.toLowerCase().includes(refProdutoInput.toLowerCase())) {
+        if (refInput && !produto.referencia.toLowerCase().includes(refInput.toLowerCase())) {
           return false;
         }
-        if (fabProdutoUnput && !produto.fabricante.toLowerCase().includes(fabProdutoUnput.toLowerCase())) {
+        if (fabInput && !produto.fabricante.toLowerCase().includes(fabInput.toLowerCase())) {
           return false;
         }
         return true;
