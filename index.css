@@ -152,8 +152,3 @@ th {
     width: 16px;
     height: 16px;
 }
-.container-valor{
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-}

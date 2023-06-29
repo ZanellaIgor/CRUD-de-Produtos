@@ -15,6 +15,10 @@ function criarCelula(textoDaCelula) {
     td.innerHTML = textoDaCelula
     return td
 }
+const formatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+})
 
 //limpaProdutos
 
@@ -97,10 +101,10 @@ function listaDeProdutosRender(produtos){
 
     for (const [key, produto] of Object.entries(produtos)) {
         //console.log(produto.nome) 
-
+        let valorFormatado = formatter.format(produto.valorVenda)
         let celulaNome = criarCelula(produto.nome)
         let celulaReferencia = criarCelula(produto.referencia)
-        let celulaValorDeVenda = criarCelula(`<div class="container-valor"><div>R$ </div> <div>${produto.valorVenda.replace(".",",")}</div></div>`)
+        let celulaValorDeVenda = criarCelula(valorFormatado)
         let celulaFabricante = criarCelula(produto.fabricante)
         let celulaEstoque = criarCelula(`${produto.estoque} ${produto.unidadeMedida}`)
 
