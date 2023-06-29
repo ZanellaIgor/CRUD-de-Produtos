@@ -88,7 +88,6 @@ async function listaDeProdutos() {
    
     if (filteredProdutos && filteredProdutos.length > 0) {
         const produtos = filteredProdutos
-        console.log('atecubanos')
         limpaProdutos()
         listaDeProdutosRender(produtos)
     } else {
@@ -142,10 +141,25 @@ function listaDeProdutosRender(produtos){
 }
 listaDeProdutos()
 
+//Função edit
 function onEditClick(id){
-    window.location.href = "/pages/editProduct?id=" + id;
+    localStorage.setItem('id', id); // Armazena o ID no localStorage
+    window.location.href = `/pages/editProduct/editProduct.html`;
 }
 
+//Função delete
+function onDeleteClick(produtoId) {
+    if (confirm('Tem certeza que deseja deletar este Produto?')) {
+        axios.delete(`${url}/${produtoId}`)
+            .then(response => {
+                console.log(response.data)
+                listaDeProdutos()
+            })
+            .catch(error => console.log(error))
+    }
+}
+
+//Função ordenar
 function ordernar(element, valorNumerico) {
     window.ordemCrescente = !window.ordemCrescente
     const asc = window.ordemCrescente;  // ordem: ascendente ou descendente
@@ -170,63 +184,12 @@ function ordernar(element, valorNumerico) {
     })
 }
 
-//Função delete
-function onDeleteClick(produtoId) {
-    if (confirm('Tem certeza que deseja deletar este Produto?')) {
-        axios.delete(`${url}/${produtoId}`)
-            .then(response => {
-                console.log(response.data)
-                listaDeProdutos()
-            })
-            .catch(error => console.log(error))
-    }
-}
+
 
 function naoImplementado() {
     alert("Função não habilitada!")
 }
 
-function editProduto(produtoId) {
-    const idProduto = produtoId
-    const produtoLinha = document.getElementById("produto-" + produtoId)
-    const descProdutoInput = document.querySelector("#descProdutoInput")
-    const vlrVendaInput = document.querySelector("#vlrVendaInput")
-    const refProdutoInput = document.querySelector("#refProdutoInput")
-    const unInput = document.querySelector("#unInput")
-    const fabProdutoUnput = document.querySelector("#fabProdutoUnput")
-    const estoqueProdutoInput = document.querySelector("#estoqueProdutoInput")
-    const imagemInput = document.querySelector("#imagemInput")
-    const salvaId = document.querySelector("#salvaId")
 
-    const estoqueUn = produtoLinha.children[5].textContent.split(' ')
-    const arraySemEspacos = estoqueUn.filter(item => item.trim() !== "");
 
-    descProdutoInput.value = produtoLinha.children[1].textContent
-    vlrVendaInput.value = produtoLinha.children[3].textContent
-    refProdutoInput.value = produtoLinha.children[2].textContent
-    unInput.value = arraySemEspacos[1]
-    fabProdutoUnput.value = produtoLinha.children[4].textContent
-    estoqueProdutoInput.value = arraySemEspacos[0]
-    imagemInput.value = produtoLinha.children[0].children[0].src
-    salvaId.value = idProduto
 
-    const registroH = document.getElementById('registro').innerHTML = "Editar Registro"
-    descProdutoInput.focus()
-
-}
-
-function alteraProduto(salvaId) {
-    const produto = criaProduto()
-    console.log(salvaId)
-    axios.patch(`${url}/${salvaId}`, produto)
-        .then(response => {
-            console.log(response)
-            window.location.reload(true)
-            // ou limpaH1()
-            // listaDeProdutos()
-
-        })
-        .catch(error => {
-            console.log(error)
-        })
-}

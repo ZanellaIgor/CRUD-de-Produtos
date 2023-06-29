@@ -32,7 +32,6 @@ function criaProduto() {
         estoque: parseInt(estoqueProduto),
         imagemProduto: imagem,
     }
-    console.log(novoProduto)
     return novoProduto
 }
 
