@@ -116,7 +116,7 @@ function listaDeProdutosRender(produtos){
 
         //Icones (del)
         let celulaIcons = criarCelula(`<div><button onclick="onDeleteClick(${produto.id})" class="imagem-acao del"><i class="fa-solid fa-trash"></i></button></div> 
-        <div><a href="/pages/editProduct/${produto.id}"><button class="imagem-acao edit"><i class="fa-solid fa-pen-to-square"></i></button></a><div>`)
+        <div><button class="imagem-acao edit" onclick="onEditClick(${produto.id})"><i class="fa-solid fa-pen-to-square"></i></button><div>`)
 
         //Imagem na tabela
         let celulaImagemProduto = criarCelula(`<img src="${produto.imagemProduto}" class="imagem-produto">`)
@@ -142,6 +142,9 @@ function listaDeProdutosRender(produtos){
 }
 listaDeProdutos()
 
+function onEditClick(id){
+    window.location.href = "/pages/editProduct?id=" + id;
+}
 
 function ordernar(element, valorNumerico) {
     window.ordemCrescente = !window.ordemCrescente
