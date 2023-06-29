@@ -9,11 +9,6 @@ let renderTimerId = null;
 
 const pagina = 1  //Sem mais paginas (Paginação)
 
-//Altera Titulo
-function limpaH1() {
-    const registroH = document.getElementById('registro').innerHTML = "Novo Registro"
-}
-
 //criando td (celula/linha)
 function criarCelula(textoDaCelula) {
     let td = document.createElement("td")
@@ -40,10 +35,6 @@ fabInput.addEventListener("input", handleInputChange);
 
 
 function handleInputChange() {
-    if (renderTimerId) {
-        clearTimeout(renderTimerId);
-      }
-      renderTimerId = setTimeout(listaDeProdutos, 300);
     listaDeProdutos();
 }
 
@@ -109,7 +100,7 @@ function listaDeProdutosRender(produtos){
 
         let celulaNome = criarCelula(produto.nome)
         let celulaReferencia = criarCelula(produto.referencia)
-        let celulaValorDeVenda = criarCelula(produto.valorVenda)
+        let celulaValorDeVenda = criarCelula(`<div class="container-valor"><div>R$ </div> <div>${produto.valorVenda.replace(".",",")}</div></div>`)
         let celulaFabricante = criarCelula(produto.fabricante)
         let celulaEstoque = criarCelula(`${produto.estoque} ${produto.unidadeMedida}`)
 

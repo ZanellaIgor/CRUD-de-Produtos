@@ -1,6 +1,6 @@
 //Axios
 const url = "https://homologacao.windel.com.br:3000/teste-front"
-
+descProdutoInput.focus()
 function criaProduto() {
     //Dados do Input
 
@@ -32,6 +32,7 @@ function criaProduto() {
         estoque: parseInt(estoqueProduto),
         imagemProduto: imagem,
     }
+
     return novoProduto
 }
 
@@ -46,4 +47,8 @@ function addNovoProduto() {
         })
         .catch(error => console.log(error))
 
+}
+
+function voltar(){
+    window.location.href = "/index.html"
 }

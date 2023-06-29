@@ -15,15 +15,11 @@ const fabProdutoUnput = document.querySelector("#fabProdutoUnput")
 const estoqueProdutoInput = document.querySelector("#estoqueProdutoInput")
 const imagemInput = document.querySelector("#imagemInput")
 
-
-
 async function buscaProduto(id) {
     try {
         const response = await axios.get(`${url}/${id}`);
         const produto = response.data;
-        console.log(produto)
         const idProduto = produto.id
-
         const salvaId = document.querySelector("#salvaId")
         descProdutoInput.value = produto.nome
         vlrVendaInput.value = produto.valorVenda
@@ -33,16 +29,13 @@ async function buscaProduto(id) {
         estoqueProdutoInput.value = produto.estoque
         imagemInput.value = produto.imagemProduto
         salvaId.value = idProduto
-
         descProdutoInput.focus()
-
 
     } catch (error) {
         alert('Algo inesperado aconteceu, tente novamente')
     }
 
 }
-
 
 buscaProduto(id)
 
@@ -62,10 +55,12 @@ function editProduct() {
             console.log(response)
             localStorage.removeItem('id');
             window.location.href="/index.html"
-
         })
         .catch(error => {
             console.log(error)
         })
 }
 
+function voltar(){
+    window.location.href = "/index.html"
+}
