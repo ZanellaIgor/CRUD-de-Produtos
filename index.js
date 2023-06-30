@@ -7,25 +7,30 @@ const ordemCrescente = true;
 //const renderização
 let renderTimerId = null;
 
-const pagina = 1  //Sem mais paginas (Paginação)
+const paginaAtual = 1;
+
+const itensPorPage = 5;
+
 
 //criando td (celula/linha)
 function criarCelula(textoDaCelula) {
     let td = document.createElement("td")
     td.innerHTML = textoDaCelula
     return td
-}
+};
+
+//Formatando Valor de Venda
 const formatter = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
-})
+});
 
 //limpaProdutos
 
 function limpaProdutos() {
     const tabelaProdutos = document.querySelectorAll("#tabelaListaProdutos > tr")
     if (tabelaProdutos && tabelaProdutos.length > 0) {
-        tabelaProdutos.forEach(tr => tr.remove())
+        tabelaProdutos.forEach(tr => tr.remove());
     }
 }
 
@@ -47,40 +52,37 @@ async function filter() {
     const descInput = document.querySelector("#descInput").value.toLowerCase();
     const refInput = document.querySelector("#refInput").value.toLowerCase();
     const fabInput = document.querySelector("#fabInput").value.toLowerCase();
-    
+
     try {
-      const response = await axios.get(`${url}`);
-      const produtos = response.data;
-      
-      console.log(produtos);
-      
-      const filteredProdutos = produtos.filter((produto) => {
-        if (descInput && !produto.nome.toLowerCase().includes(descInput.toLowerCase())) {
-          return false;
-        }
-        if (refInput && !produto.referencia.toLowerCase().includes(refInput.toLowerCase())) {
-          return false;
-        }
-        if (fabInput && !produto.fabricante.toLowerCase().includes(fabInput.toLowerCase())) {
-          return false;
-        }
-        return true;
-      });
-      
-      console.log(filteredProdutos);
-      return filteredProdutos
-      
+        const response = await axios.get(`${url}`);
+        const produtos = response.data;
+
+
+        const filteredProdutos = produtos.filter((produto) => {
+            if (descInput && !produto.nome.toLowerCase().includes(descInput.toLowerCase())) {
+                return false;
+            }
+            if (refInput && !produto.referencia.toLowerCase().includes(refInput.toLowerCase())) {
+                return false;
+            }
+            if (fabInput && !produto.fabricante.toLowerCase().includes(fabInput.toLowerCase())) {
+                return false;
+            }
+            return true;
+        });
+
+        console.log(filteredProdutos);
+        return filteredProdutos;
+
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
-  }
+}
 
 //função lista de produtos
 
 async function listaDeProdutos() {
-    
     const filteredProdutos = await filter();
-   
     if (filteredProdutos && filteredProdutos.length > 0) {
         const produtos = filteredProdutos
         limpaProdutos()
@@ -90,16 +92,47 @@ async function listaDeProdutos() {
         const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
         let linha = document.createElement("tr")
         linha.classList.add("container-produto")
-        linha.innerHTML = "deu ruim"
+        linha.innerHTML = "Não foi encontrado produto com este Filtro"
         tabelaProdutos.appendChild(linha)
 
     }
 }
 
-function listaDeProdutosRender(produtos){
+
+
+function listaDeProdutosRender(produtos) {
     const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
 
-    for (const [key, produto] of Object.entries(produtos)) {
+    //Itens por pagina
+    const startPagina = (paginaAtual - 1) * itensPorPage;
+    const endPagina = startPagina + itensPorPage;
+    const totalPaginas = Math.ceil((produtos.length) / (itensPorPage));
+
+    const displayProdutos = produtos.slice(startPagina, endPagina)
+    console.log(displayProdutos)
+    const containerPagina = document.getElementById('container-pagina');
+
+    for (let i = 1; i <= totalPaginas; i++) {
+        const pageLink = document.createElement("button");
+        pageLink.classList.add("buttonNext")
+        pageLink.textContent = i;
+        containerPagina.appendChild(pageLink)
+        pageLink.addEventListener('click', () => {
+            console.log(i)
+            paginaAtual = i; // Atualiza a página atual
+            displayProducts(paginaAtual) ={ };
+        });
+        function displayProducts(page) {
+            const startIndex = (page - 1) * itensPorPage;
+            const endIndex = startIndex + itensPorPage;
+            const displayedProducts = products.slice(startIndex, endIndex)
+        }
+        
+    };
+
+
+
+    for (const [key, produto] of Object.entries(displayProdutos)) {
         //console.log(produto.nome) 
         let valorFormatado = formatter.format(produto.valorVenda)
         let celulaNome = criarCelula(produto.nome)
@@ -137,10 +170,11 @@ function listaDeProdutosRender(produtos){
 listaDeProdutos()
 
 //Função edit
-function onEditClick(id){
+function onEditClick(id) {
     localStorage.setItem('id', id); // Armazena o ID no localStorage
     window.location.href = `/pages/editProduct/editProduct.html`;
 }
+
 
 //Função delete
 function onDeleteClick(produtoId) {
@@ -184,7 +218,5 @@ function ordernar(element, valorNumerico) {
 function naoImplementado() {
     alert("Função não habilitada!")
 }
-
-
 
 
