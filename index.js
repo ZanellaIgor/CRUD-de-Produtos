@@ -4,8 +4,6 @@ const url = "https://homologacao.windel.com.br:3000/teste-front"
 //const de ordenação da lista
 const ordemCrescente = true;
 
-//const renderização
-let renderTimerId = null;
 
 const paginaAtual = 1;
 
@@ -162,9 +160,7 @@ function listaDeProdutosRender(produtos) {
         linha.appendChild(celulaFabricante)
         linha.appendChild(celulaEstoque)
         linha.appendChild(celulaIcons)
-
         tabelaProdutos.appendChild(linha)
-
     }
 }
 listaDeProdutos()
