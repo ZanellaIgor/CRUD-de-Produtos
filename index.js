@@ -23,9 +23,9 @@ const formatter = new Intl.NumberFormat("pt-BR", {
     currency: "BRL",
 });
 
-//limpaProdutos
+//limparTabelaDeProdutos
 
-function limpaProdutos() {
+function limparTabelaDeProdutos() {
     const tabelaProdutos = document.querySelectorAll("#tabelaListaProdutos > tr")
     if (tabelaProdutos && tabelaProdutos.length > 0) {
         tabelaProdutos.forEach(tr => tr.remove());
@@ -55,7 +55,6 @@ async function filter() {
         const response = await axios.get(`${url}`);
         const produtos = response.data;
 
-
         const filteredProdutos = produtos.filter((produto) => {
             if (descInput && !produto.nome.toLowerCase().includes(descInput.toLowerCase())) {
                 return false;
@@ -78,15 +77,15 @@ async function filter() {
 }
 
 //função lista de produtos
-
-async function listaDeProdutos() {
+async function inicializar() {
     const filteredProdutos = await filter();
     if (filteredProdutos && filteredProdutos.length > 0) {
         const produtos = filteredProdutos
-        limpaProdutos()
-        listaDeProdutosRender(produtos)
+        limparTabelaDeProdutos()
+        renderizarTabelaDeProdutos(produtos, paginaAtual)
+        criarPaginacao(produtos)
     } else {
-        limpaProdutos()
+        limparTabelaDeProdutos()
         const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
         let linha = document.createElement("tr")
         linha.classList.add("container-produto")
@@ -96,39 +95,29 @@ async function listaDeProdutos() {
     }
 }
 
-
-
-function listaDeProdutosRender(produtos) {
-    const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
-
+function criarPaginacao(listaDeProdutos) {
     //Itens por pagina
-    const startPagina = (paginaAtual - 1) * itensPorPage;
-    const endPagina = startPagina + itensPorPage;
-    const totalPaginas = Math.ceil((produtos.length) / (itensPorPage));
-
-    const displayProdutos = produtos.slice(startPagina, endPagina)
-    console.log(displayProdutos)
+    const totalPaginas = Math.ceil((listaDeProdutos.length) / (itensPorPage));
     const containerPagina = document.getElementById('container-pagina');
-
     for (let i = 1; i <= totalPaginas; i++) {
         const pageLink = document.createElement("button");
         pageLink.classList.add("buttonNext")
         pageLink.textContent = i;
         containerPagina.appendChild(pageLink)
         pageLink.addEventListener('click', () => {
-            console.log(i)
-            paginaAtual = i; // Atualiza a página atual
-            displayProducts(paginaAtual) ={ };
+            limparTabelaDeProdutos()
+            renderizarTabelaDeProdutos(listaDeProdutos, i)
         });
-        function displayProducts(page) {
-            const startIndex = (page - 1) * itensPorPage;
-            const endIndex = startIndex + itensPorPage;
-            const displayedProducts = products.slice(startIndex, endIndex)
-        }
-        
     };
+}
 
 
+function renderizarTabelaDeProdutos(produtos, numeroDaPaginaAtual) {
+    const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
+    const startPagina = (numeroDaPaginaAtual - 1) * itensPorPage;
+    const endPagina = startPagina + itensPorPage;
+    const displayProdutos = produtos.slice(startPagina, endPagina)
+    console.log(displayProdutos)
 
     for (const [key, produto] of Object.entries(displayProdutos)) {
         //console.log(produto.nome) 
@@ -163,7 +152,7 @@ function listaDeProdutosRender(produtos) {
         tabelaProdutos.appendChild(linha)
     }
 }
-listaDeProdutos()
+
 
 //Função edit
 function onEditClick(id) {
@@ -209,10 +198,14 @@ function ordernar(element, valorNumerico) {
     })
 }
 
-
+function displayProducts(page, produtos) {
+    const startIndex = (page - 1) * itensPorPage;
+    const endIndex = startIndex + itensPorPage;
+    console.log(produtos)
+}
 
 function naoImplementado() {
     alert("Função não habilitada!")
 }
 
-
+inicializar()
