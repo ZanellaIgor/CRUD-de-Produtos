@@ -42,7 +42,7 @@ fabInput.addEventListener("input", handleInputChange);
 
 
 function handleInputChange() {
-    listaDeProdutos();
+    inicializar();
 }
 
 //filtro
@@ -82,8 +82,9 @@ async function inicializar() {
     if (filteredProdutos && filteredProdutos.length > 0) {
         const produtos = filteredProdutos
         limparTabelaDeProdutos()
-        renderizarTabelaDeProdutos(produtos, paginaAtual)
         criarPaginacao(produtos)
+        renderizarTabelaDeProdutos(produtos, paginaAtual)
+        
     } else {
         limparTabelaDeProdutos()
         const tabelaProdutos = document.querySelector("#tabelaListaProdutos")
@@ -99,7 +100,10 @@ function criarPaginacao(listaDeProdutos) {
     //Itens por pagina
     const totalPaginas = Math.ceil((listaDeProdutos.length) / (itensPorPage));
     const containerPagina = document.getElementById('container-pagina');
+    containerPagina.innerHTML=''
+    
     for (let i = 1; i <= totalPaginas; i++) {
+        
         const pageLink = document.createElement("button");
         pageLink.classList.add("buttonNext")
         pageLink.textContent = i;
@@ -160,14 +164,13 @@ function onEditClick(id) {
     window.location.href = `/pages/editProduct/editProduct.html`;
 }
 
-
 //Função delete
 function onDeleteClick(produtoId) {
     if (confirm('Tem certeza que deseja deletar este Produto?')) {
         axios.delete(`${url}/${produtoId}`)
             .then(response => {
                 console.log(response.data)
-                listaDeProdutos()
+                inicializar()
             })
             .catch(error => console.log(error))
     }
