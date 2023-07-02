@@ -32,7 +32,6 @@ function limparTabelaDeProdutos() {
     }
 }
 
-
 const descInput = document.querySelector("#descInput");
 const refInput = document.querySelector("#refInput");
 const fabInput = document.querySelector("#fabInput");
@@ -56,24 +55,35 @@ async function filter() {
         const produtos = response.data;
 
         const filteredProdutos = produtos.filter((produto) => {
-            if (descInput && !produto.nome.toLowerCase().includes(descInput.toLowerCase())) {
-                return false;
+            // if (descInput && !produto["nome"].toLowerCase().includes(descInput.toLowerCase())) {
+            //     return false;
+            // }
+            // if (refInput && !produto.referencia.toLowerCase().includes(refInput.toLowerCase())) {
+            //     return false;
+            // }
+            // if (fabInput && !produto.fabricante.toLowerCase().includes(fabInput.toLowerCase())) {
+            //     return false;
+            // }
+            if(filtroPorPropriedade(produto,"nome",descInput)){
+                return false
             }
-            if (refInput && !produto.referencia.toLowerCase().includes(refInput.toLowerCase())) {
-                return false;
+            if(filtroPorPropriedade(produto,"referencia",refInput)){
+                return false
             }
-            if (fabInput && !produto.fabricante.toLowerCase().includes(fabInput.toLowerCase())) {
-                return false;
+            if(filtroPorPropriedade(produto,"fabricante",fabInput)){
+                return false
             }
             return true;
         });
-
-        console.log(filteredProdutos);
         return filteredProdutos;
 
     } catch (error) {
         console.log(error);
     }
+}
+
+function filtroPorPropriedade(produto,nomePropriedade,propriedadeFiltrada){
+    return propriedadeFiltrada && !produto[nomePropriedade].toLowerCase().includes(propriedadeFiltrada.toLowerCase())
 }
 
 //função lista de produtos
@@ -133,8 +143,8 @@ function renderizarTabelaDeProdutos(produtos, numeroDaPaginaAtual) {
         let celulaEstoque = criarCelula(`${produto.estoque} ${produto.unidadeMedida}`)
 
         //Icones (del)
-        let celulaIcons = criarCelula(`<div><button onclick="onDeleteClick(${produto.id})" class="imagem-acao del"><i class="fa-solid fa-trash"></i></button></div> 
-        <div><button class="imagem-acao edit" onclick="onEditClick(${produto.id})"><i class="fa-solid fa-pen-to-square"></i></button><div>`)
+        let celulaIcons = criarCelula(`<div><button onclick="removerProduto(${produto.id})" class="imagem-acao del"><i class="fa-solid fa-trash"></i></button></div> 
+        <div><button class="imagem-acao edit" onclick="alterarProduto(${produto.id})"><i class="fa-solid fa-pen-to-square"></i></button><div>`)
 
         //Imagem na tabela
         let celulaImagemProduto = criarCelula(`<img src="${produto.imagemProduto}" class="imagem-produto">`)
@@ -159,13 +169,13 @@ function renderizarTabelaDeProdutos(produtos, numeroDaPaginaAtual) {
 
 
 //Função edit
-function onEditClick(id) {
+function alterarProduto(id) {
     localStorage.setItem('id', id); // Armazena o ID no localStorage
-    window.location.href = `/pages/editProduct/editProduct.html`;
+    window.location.href = `/paginas/editarProduto/editarProduto.html`;
 }
 
 //Função delete
-function onDeleteClick(produtoId) {
+function removerProduto(produtoId) {
     if (confirm('Tem certeza que deseja deletar este Produto?')) {
         axios.delete(`${url}/${produtoId}`)
             .then(response => {

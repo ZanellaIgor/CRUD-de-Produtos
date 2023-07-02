@@ -101,7 +101,7 @@ tr {
     padding: 10px;
     display: grid;
     border-radius: 6px;
-    grid-template-columns: 1.5fr 4fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.2fr 4fr 1fr 1fr 1fr 1fr 1fr;
     margin-bottom: 10px;
     border-bottom: #FFFFFF;
 }
