@@ -153,3 +153,25 @@ th {
     width: 16px;
     height: 16px;
 }
+
+.container-pagina{
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+#container-pagina{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    
+    border: 1px solid #A0AEC0;
+    border-radius: 6px;
+}
+#container-pagina button{
+    cursor: pointer;
+    margin: 5px;
+    border: 1px solid #A0AEC0;
+    background-color: #E2E8F0;
+    border-radius: 2px;
+}
