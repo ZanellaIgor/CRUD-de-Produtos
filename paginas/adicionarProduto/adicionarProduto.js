@@ -42,7 +42,9 @@ function addNovoProduto() {
     axios.post(url, novoProduto)
         .then(response => {
             console.log(response.data)
-            alert('Produto Criado com Sucesso')
+            const mensagem = response.data.message
+            console.log(mensagem)
+            alert(`${mensagem} ${novoProduto.nome}`)
             window.location.href = "/index.html"
         })
         .catch(error => console.log(error))

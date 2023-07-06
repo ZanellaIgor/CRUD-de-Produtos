@@ -53,6 +53,7 @@ async function filter() {
     try {
         const response = await axios.get(`${url}`);
         const produtos = response.data;
+        console.log(response)
 
         const filteredProdutos = produtos.filter((produto) => {
             // if (descInput && !produto["nome"].toLowerCase().includes(descInput.toLowerCase())) {

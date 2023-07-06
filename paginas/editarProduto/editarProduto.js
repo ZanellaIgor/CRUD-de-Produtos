@@ -52,7 +52,10 @@ function editProduct() {
     console.log(id)
     axios.patch(`${url}/${id}`, produto)
         .then(response => {
-            console.log(response)
+            console.log(response.data)
+            const mensagem = response.data.message
+            console.log(mensagem)
+            alert(`${mensagem} ${produto.nome}`)
             localStorage.removeItem('id');
             window.location.href="/index.html"
         })
